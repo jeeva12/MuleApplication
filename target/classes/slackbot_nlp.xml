@@ -28,7 +28,7 @@ http://www.mulesoft.org/schema/mule/sfdc http://www.mulesoft.org/schema/mule/sfd
     <http:request-config name="HTTP_Request_Configuration_Slack" protocol="HTTPS" host="jeeva-chatbot.slack.com" port="443" doc:name="HTTP Request Configuration"/>
     <flow name="webcall_main">
         <http:listener config-ref="HTTP_Listener_Configuration" path="/getSlack" doc:name="HTTP"/>
-        <set-property propertyName="http.status" value="307" doc:name="Property"/>
+        <set-property propertyName="http.status" value="200" doc:name="Property"/>
         <set-property propertyName="Location" value="https://jeeva-chatbot.slack.com/messages/D8J4M09RP/details" doc:name="Property"/>
     </flow>
    
@@ -38,7 +38,7 @@ http://www.mulesoft.org/schema/mule/sfdc http://www.mulesoft.org/schema/mule/sfd
         <slack:post-message config-ref="Slack__Token_Configuration" channelId="#[flowVars.incomingMessage.channel]" iconURL="http://icons.iconarchive.com/icons/sonya/swarm/256/Pizza-icon.png" username="PizzaStore1" message="#[flowVars.apiAiResponse.speech]" doc:name="Reply to original sender"/>
     </flow>
      <sub-flow name="MessagetoDialogflow">
-        <logger message="Message from slack" level="INFO" doc:name="Logger" doc:description="Message from slack"/>
+        <logger message="Input Message from slack" level="INFO" doc:name="Logger" doc:description="Message from slack"/>
         <dw:transform-message doc:name="Capture incoming slack message">
             <dw:set-variable variableName="incomingMessage"><![CDATA[%dw 1.0
 %output application/java
